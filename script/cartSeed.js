@@ -35,3 +35,5 @@ const cart = [
     quantity: 10,
   },
 ];
+
+module.exports = cart;
