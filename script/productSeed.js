@@ -6,7 +6,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/d/df/Dream_Potion_Sprite.png",
     quantity: 100,
-    catagory: "Potions",
+    category: "Potions",
   },
   {
     name: "Super Potion",
@@ -15,7 +15,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/5/57/Dream_Super_Potion_Sprite.png",
     quantity: 100,
-    catagory: "Potions",
+    category: "Potions",
   },
   {
     name: "Hyper Potion",
@@ -24,7 +24,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/c/c8/Dream_Hyper_Potion_Sprite.png",
     quantity: 100,
-    catagory: "Potions",
+    category: "Potions",
   },
   {
     name: "Max Potion",
@@ -33,7 +33,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/a/a2/Dream_Max_Potion_Sprite.png",
     quantity: 100,
-    catagory: "Potions",
+    category: "Potions",
   },
   {
     name: "Full Restore",
@@ -42,7 +42,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/0/0c/Dream_Full_Restore_Sprite.png",
     quantity: 100,
-    catagory: "Potions",
+    category: "Potions",
   },
   {
     name: "Poké Ball",
@@ -51,7 +51,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/7/79/Dream_Pok%C3%A9_Ball_Sprite.png",
     quantity: 100,
-    catagory: "Poké Balls",
+    category: "Poké Balls",
   },
   {
     name: "Great Ball",
@@ -61,7 +61,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/b/bf/Dream_Great_Ball_Sprite.png",
     quantity: 100,
-    catagory: "Poké Balls",
+    category: "Poké Balls",
   },
   {
     name: "Ultra Ball",
@@ -71,7 +71,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/a/a8/Dream_Ultra_Ball_Sprite.png",
     quantity: 100,
-    catagory: "Poké Balls",
+    category: "Poké Balls",
   },
   {
     name: "Master Ball",
@@ -80,7 +80,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/9/95/Dream_Master_Ball_Sprite.png",
     quantity: 1,
-    catagory: "Poké Balls",
+    category: "Poké Balls",
   },
   {
     name: "Dusk Ball",
@@ -90,7 +90,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/5/59/Dream_Dusk_Ball_Sprite.png",
     quantity: 100,
-    catagory: "Poké Balls",
+    category: "Poké Balls",
   },
   {
     name: "X Attack",
@@ -99,7 +99,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/d/df/Dream_X_Attack_Sprite.png",
     quantity: 100,
-    catagory: "Battle Items",
+    category: "Battle Items",
   },
   {
     name: "X Defense",
@@ -108,7 +108,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/d/d4/Dream_X_Defense_Sprite.png",
     quantity: 100,
-    catagory: "Battle Items",
+    category: "Battle Items",
   },
   {
     name: "X Speed",
@@ -117,7 +117,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/b/ba/Dream_X_Speed_Sprite.png",
     quantity: 100,
-    catagory: "Battle Items",
+    category: "Battle Items",
   },
   {
     name: "Dire Hit",
@@ -127,7 +127,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/d/d3/Dream_Dire_Hit_Sprite.png",
     quantity: 100,
-    catagory: "Battle Items",
+    category: "Battle Items",
   },
   {
     name: "X Accuracy",
@@ -136,7 +136,7 @@ const products = [
     imageUrl:
       "https://archives.bulbagarden.net/media/upload/1/18/Dream_X_Accuracy_Sprite.png",
     quantity: 100,
-    catagory: "Battle Items",
+    category: "Battle Items",
   },
 ];
 
