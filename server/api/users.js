@@ -5,22 +5,48 @@ const {
 } = require('../db');
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
+router.get('/:id/all', async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      // explicitly select only the id and username fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ['id', 'username'],
-    });
-    res.json(users);
+    const user = await User.findByPk(req.params.id);
+    if (user.isAdmin) {
+      const users = await User.findAll({
+        // explicitly select only the id and username fields - even though
+        // users' passwords are encrypted, it won't help if we just
+        // send everything to anyone who asks!
+        attributes: [
+          'id',
+          'firstName',
+          'lastName',
+          'email',
+          'street',
+          'city',
+          'state',
+          'zip',
+          'isAdmin',
+        ],
+      });
+      res.json(users);
+    } else {
+      res.send('User Not Authorized!!!');
+    }
   } catch (err) {
     next(err);
   }
 });
 router.get('/:id', async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id, {
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'street',
+        'city',
+        'state',
+        'zip',
+      ],
+    });
     res.json(user);
   } catch (err) {
     next(err);
@@ -56,6 +82,7 @@ router.put('/:id', async (req, res, next) => {
       throw new Error('User Not Found');
     }
     const updatedUser = await user.update(req.body);
+    //add password updating check
     res.status(200).send(updatedUser);
   } catch (err) {
     next(err);
