@@ -1,11 +1,12 @@
-"use strict";
+'use strict';
 
 const {
   db,
-  models: { User, Product },
-} = require("../server/db");
-const products = require("./productSeed");
-const users = require("./userSeed");
+  models: { User, Product, UserProducts },
+} = require('../server/db');
+const products = require('./productSeed');
+const users = require('./userSeed');
+const carts = require('./cartSeed');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -17,15 +18,21 @@ const seed = async () => {
     await Promise.all(
       users.map((user) => {
         return User.create(user);
-      })
+      }),
     );
     await Promise.all(
       products.map((product) => {
         return Product.create(product);
-      })
+      }),
+    );
+    await Promise.all(
+      carts.map((cart) => {
+        return UserProducts.create(cart);
+      }),
     );
     console.log(`seeded ${users.length} users`);
     console.log(`seeded ${products.length} products`);
+    console.log(`seeded ${carts.length} carts`);
     console.log(`seeded successfully`);
   } catch (err) {
     console.log(err);
@@ -38,16 +45,16 @@ const seed = async () => {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log("seeding...");
+  console.log('seeding...');
   try {
     await seed();
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
   } finally {
-    console.log("closing db connection");
+    console.log('closing db connection');
     await db.close();
-    console.log("db connection closed");
+    console.log('db connection closed');
   }
 }
 
