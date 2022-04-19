@@ -98,6 +98,6 @@ const users = [
     zip: "64134",
     isAdmin: false,
   },
-]
+];
 
-modules.export= users;
+module.exports = users;
