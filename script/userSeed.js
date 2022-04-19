@@ -1,6 +1,6 @@
 const users = [
   {
-    firsName: "Ash",
+    firstName: "Ash",
     lastName: "Ketchum",
     email: "a_ketchum@pokemon.com",
     password: "pika123",
@@ -11,7 +11,7 @@ const users = [
     isAdmin: true,
   },
   {
-    firsName: "Inuko",
+    firstName: "Inuko",
     lastName: "Inuyama",
     email: "inuko_inuyama@gmail.com",
     password: "password123",
@@ -22,7 +22,7 @@ const users = [
     isAdmin: false,
   },
   {
-    firsName: "Yuji",
+    firstName: "Yuji",
     lastName: "Ueda",
     email: "y.ueda@hotmail.com",
     password: "Maddie321",
@@ -33,7 +33,7 @@ const users = [
     isAdmin: false,
   },
   {
-    firsName: "Amy",
+    firstName: "Amy",
     lastName: "Rogers",
     email: "amy.rogers@pokeusa.com",
     password: "Admin1234!",
@@ -44,7 +44,7 @@ const users = [
     isAdmin: false,
   },
   {
-    firsName: "Serena",
+    firstName: "Serena",
     lastName: "Kalos",
     email: "serena_kalos@yahoo.com",
     password: "Fushigi!!",
@@ -55,7 +55,7 @@ const users = [
     isAdmin: false,
   },
   {
-    firsName: "Yuki",
+    firstName: "Yuki",
     lastName: "Kaji",
     email: "yuki_kaji@pokeco.com",
     password: "passwordpoke34!",
@@ -66,7 +66,7 @@ const users = [
     isAdmin: false,
   },
   {
-    firsName: "Rotom",
+    firstName: "Rotom",
     lastName: "Pokedex",
     email: "rotom@yahoo.com",
     password: "Alola123",
@@ -77,7 +77,7 @@ const users = [
     isAdmin: false,
   },
   {
-    firsName: "Celmont",
+    firstName: "Celmont",
     lastName: "Dedenne",
     email: "celemont-dednne@aol.com",
     password: "Lana123",
@@ -88,7 +88,7 @@ const users = [
     isAdmin: false,
   },
   {
-    firsName: "Kiawe",
+    firstName: "Kiawe",
     lastName: "Ishikawa",
     email: "kishikawa@yahoo.com",
     password: "Marc123!",
