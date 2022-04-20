@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Product = db.define('product', {
   name: {
@@ -10,10 +10,11 @@ const Product = db.define('product', {
     },
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true,
+      min: 0,
     },
   },
   description: {
@@ -22,7 +23,7 @@ const Product = db.define('product', {
   imageUrl: {
     type: Sequelize.TEXT,
     defaultValue:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/640px-Pok%C3%A9_Ball_icon.svg.png',
+      'https://cdn.shopify.com/s/files/1/0581/9138/0663/files/pokemart_logo_2_1200x1200.png',
   },
   quantity: {
     type: Sequelize.INTEGER,
@@ -30,5 +31,5 @@ const Product = db.define('product', {
   category: {
     type: Sequelize.STRING,
   },
-})
-module.exports = Product
+});
+module.exports = Product;
