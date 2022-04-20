@@ -5,6 +5,7 @@ const {
 } = require('../db');
 module.exports = router;
 
+// api/users/:id/all
 router.get('/:id/all', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -33,6 +34,8 @@ router.get('/:id/all', async (req, res, next) => {
     next(err);
   }
 });
+
+// api/users/:id
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
@@ -53,6 +56,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+// api/users/:id/cart
 router.get('/:id/cart', async (req, res, next) => {
   try {
     const cart = await UserProducts.findAll({
@@ -64,6 +68,35 @@ router.get('/:id/cart', async (req, res, next) => {
   }
 });
 
+// api/users/:id/cart
+router.put('/:id/cart', async(req, res, next) =>{
+  try {
+    const user = await User.findByPk(req.params.id)
+    const product = await UserProducts.findOne(
+      {where:{productId:req.body.productId, userId: user.id}}
+    )
+
+    console.log(product)
+    if(product){
+      // person is updating qty of an existing product in cart
+      const updatedCart = await product.update(
+        {quantity: req.body.quantity},
+      )
+    } else {
+      // person is adding new item to cart
+      const createCart = await UserProducts.create({
+        userId: user.id,
+        productId: req.body.productId,
+        quantity: req.body.quantity
+      })
+    }
+    res.status(200).send('cart updated');
+  } catch (err) {
+    next(err)
+  }
+})
+
+// api/users/:id
 router.delete('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -74,6 +107,7 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
+// api/users/:id
 router.put('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -89,6 +123,8 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
+
+// api/users
 router.post('/', async (req, res, next) => {
   try {
     let user = await User.create(req.body);
