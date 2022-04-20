@@ -2,17 +2,27 @@ const orders = [
   {
     orderId: 1,
     userId: 1,
-    isCompleted: true,
+    isComplete: true,
   },
   {
     orderId: 2,
     userId: 3,
-    isCompleted: false,
+    isComplete: false,
   },
   {
     orderId: 3,
     userId: 6,
-    isCompleted: false,
+    isComplete: false,
+  },
+  {
+    orderId: 4,
+    userId: 5,
+    isComplete: true,
+  },
+  {
+    orderId: 5,
+    userId: 5,
+    isComplete: false,
   },
 ];
 
