@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product, UserProducts },
+  models: { User, Product, UserProducts, Order },
 } = require('../server/db');
 const products = require('./productSeed');
 const users = require('./userSeed');
@@ -16,26 +16,31 @@ const orders = require('./orderSeed');
 const seed = async () => {
   try {
     await db.sync({ force: true });
+
     await Promise.all(
       users.map((user) => {
         return User.create(user);
       }),
     );
+
     await Promise.all(
       products.map((product) => {
         return Product.create(product);
       }),
     );
+
     await Promise.all(
       carts.map((cart) => {
         return UserProducts.create(cart);
       }),
     );
+
     await Promise.all(
       orders.map((order) => {
-        return order.create(order);
+        return Order.create(order);
       }),
     );
+
     console.log(`seeded ${users.length} users`);
     console.log(`seeded ${products.length} products`);
     console.log(`seeded ${carts.length} carts`);
