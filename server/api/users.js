@@ -6,7 +6,7 @@ const {
 } = require('../db');
 module.exports = router;
 
-//api/users/:id/all
+// api/users/:id/all
 router.get('/:id/all', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -36,7 +36,7 @@ router.get('/:id/all', async (req, res, next) => {
   }
 });
 
-//api/users/:id
+// api/users/:id
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
@@ -57,7 +57,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-//api/users/:id/cart
+// api/users/:id/cart
 router.get('/:id/cart', async (req, res, next) => {
   try {
     const cart = await OrderProducts.findAll({
