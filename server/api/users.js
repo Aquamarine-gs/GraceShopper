@@ -1,10 +1,12 @@
 const router = require('express').Router();
+const { isAdmin, requireToken } = require('./gatekeeper');
 const { user } = require('pg/lib/defaults');
 const {
-  models: { User, UserProducts },
+  models: { User, OrderProducts },
 } = require('../db');
 module.exports = router;
 
+//api/users/:id/all
 router.get('/:id/all', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -33,6 +35,8 @@ router.get('/:id/all', async (req, res, next) => {
     next(err);
   }
 });
+
+//api/users/:id
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
@@ -53,10 +57,11 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+//api/users/:id/cart
 router.get('/:id/cart', async (req, res, next) => {
   try {
-    const cart = await UserProducts.findAll({
-      where: { userId: req.params.id },
+    const cart = await OrderProducts.findAll({
+      where: { orderId: req.body.orderId },
     });
     res.json(cart);
   } catch (err) {
@@ -64,6 +69,8 @@ router.get('/:id/cart', async (req, res, next) => {
   }
 });
 
+//DELETE
+//api/users/:id
 router.delete('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -74,6 +81,8 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
+//UPDATE
+//api/users/:id
 router.put('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -89,6 +98,8 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
+//CREATE
+//api/users
 router.post('/', async (req, res, next) => {
   try {
     let user = await User.create(req.body);
