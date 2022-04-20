@@ -76,7 +76,6 @@ router.put('/:id/cart', async(req, res, next) =>{
       {where:{productId:req.body.productId, userId: user.id}}
     )
 
-    console.log(product)
     if(product){
       // person is updating qty of an existing product in cart
       const updatedCart = await product.update(
