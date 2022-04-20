@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { isAdmin, requireToken } = require('./gatekeeper');
 const { user } = require('pg/lib/defaults');
 const {
-  models: { User, OrderProducts },
+  models: { User, Order, Product, OrderProducts },
 } = require('../db');
 module.exports = router;
 
@@ -57,17 +57,24 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+//GET CART ITEMS by userId ROUTE
 // api/users/:id/cart
 router.get('/:id/cart', async (req, res, next) => {
   try {
-    const cart = await OrderProducts.findAll({
-      where: { orderId: req.body.orderId },
+    const { id } = await User.findByPk(req.params.id, {
+      attributes: ['id'],
+    });
+    const cart = await Order.findAll({
+      where: { userId: id, isComplete: req.body.isComplete },
+      include: { model: Product },
     });
     res.json(cart);
   } catch (err) {
     next(err);
   }
 });
+
+//UPDATE CART
 
 //DELETE
 //api/users/:id
