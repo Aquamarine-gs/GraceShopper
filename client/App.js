@@ -9,7 +9,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <AllProducts />
+      {/* <AllProducts /> */}
       <Routes />
     </div>
   );

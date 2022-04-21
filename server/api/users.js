@@ -1,12 +1,134 @@
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { protect } = require('../auth');
 const { isAdmin, requireToken } = require('./gatekeeper');
-const { user } = require('pg/lib/defaults');
 const {
   models: { User, Order, Product, OrderProducts },
 } = require('../db');
 module.exports = router;
 
-// api/users/:id/all
+// URL Path: http://localhost:8080/api/users
+
+// Description: Create/Register user
+// Route: POST api/users
+router.post('/', async (req, res, next) => {
+  try {
+    const { firstName, lastName, email, password, street, city, state, zip } =
+      req.body;
+
+    // Check if all fields were included
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !street ||
+      !city ||
+      !state ||
+      !zip
+    ) {
+      res.status(400);
+      throw new Error('Please add all fields');
+    }
+
+    // Check if user already exists
+    const userExists = await User.findOne({
+      where: { email },
+    });
+
+    if (userExists) {
+      res.status(400);
+      throw new Error('User already exists');
+    }
+
+    // Hash Password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create User
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      street,
+      city,
+      state,
+      zip,
+    });
+
+    if (user) {
+      res.status(201).json({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        street: user.street,
+        city: user.city,
+        state: user.state,
+        zip: user.zip,
+        token: generateToken(user.id),
+      });
+    } else {
+      res.status(400);
+      throw new Error('Invalid user data');
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Description: Authenticate and login user
+// Route: POST /api/users/login
+router.post('/login', async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check for user email
+    const user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (user && password && (await bcrypt.compare(password, user.password))) {
+      res.json({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        street: user.street,
+        city: user.city,
+        state: user.state,
+        zip: user.zip,
+        token: generateToken(user.id),
+      });
+    } else {
+      res.status(400);
+      throw new Error('Invalid credentials');
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Description: Get user data
+// Route: GET /api/users/me
+router.get('/me', protect, async (req, res, next) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Generate Token Function
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+};
+
+// Description: Get all users
+// Route: GET api/users/:id/all
 router.get('/:id/all', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -36,7 +158,8 @@ router.get('/:id/all', async (req, res, next) => {
   }
 });
 
-// api/users/:id
+// // Description: Get single users
+// // Route: GET api/users/:id
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
@@ -57,8 +180,8 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-//GET CART ITEMS by userId ROUTE
-// api/users/:id/cart
+// Description: Get cart items by userId
+// Route: GET api/users/:id/cart
 router.get('/:id/cart', async (req, res, next) => {
   try {
     const { id } = await User.findByPk(req.params.id, {
@@ -100,17 +223,6 @@ router.put('/:id', async (req, res, next) => {
     const updatedUser = await user.update(req.body);
     //add password updating check
     res.status(200).send(updatedUser);
-  } catch (err) {
-    next(err);
-  }
-});
-
-//CREATE
-//api/users
-router.post('/', async (req, res, next) => {
-  try {
-    let user = await User.create(req.body);
-    res.status(200).send(user);
   } catch (err) {
     next(err);
   }
