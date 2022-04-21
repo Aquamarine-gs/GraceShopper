@@ -3,8 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 export const SingleProductCard = (props) => {
-  console.log(props.props.imageUrl);
-
   const { imageUrl, name, price, category } = props.props;
 
   return (
@@ -12,8 +10,8 @@ export const SingleProductCard = (props) => {
       <Card.Img variant="top" src={imageUrl} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
-        <Card.Text>{category}</Card.Text>
-        <Card.Text>{price}</Card.Text>
+        <Card.Subtitle>{category}</Card.Subtitle>
+        <Card.Text>{`$ ${price / 100} `}</Card.Text>
         <Button variant="primary">Add to Cart</Button>
       </Card.Body>
     </Card>

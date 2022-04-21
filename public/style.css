@@ -19,3 +19,8 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#logo {
+  max-width: 400px;
+  max-height: fit-content;
+}
