@@ -187,8 +187,8 @@ router.get('/:id/cart', async (req, res, next) => {
     const { id } = await User.findByPk(req.params.id, {
       attributes: ['id'],
     });
-    const cart = await Order.findAll({
-      where: { userId: id, isComplete: req.body.isComplete },
+    const cart = await Order.findOne({
+      where: { userId: id, isComplete: false },
       include: { model: Product },
     });
     res.json(cart);

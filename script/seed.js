@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcrypt');
 
 const {
   db,
@@ -18,8 +19,28 @@ const seed = async () => {
     await db.sync({ force: true });
 
     await Promise.all(
-      users.map((user) => {
-        return User.create(user);
+      users.map(async (user) => {
+        const {
+          firstName,
+          lastName,
+          email,
+          password,
+          street,
+          city,
+          state,
+          zip,
+        } = user;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        return User.create({
+          firstName,
+          lastName,
+          email,
+          password: hashedPassword,
+          street,
+          city,
+          state,
+          zip,
+        });
       }),
     );
 
