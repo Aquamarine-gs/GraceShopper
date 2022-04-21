@@ -1,11 +1,11 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { logout } from '../store'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-    <h1>POKE MART</h1>
+    <img id="logo" src="../images/logo/pokemart.png" />
     <nav>
       {isLoggedIn ? (
         <div>
@@ -25,7 +25,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     </nav>
     <hr />
   </div>
-)
+);
 
 /**
  * CONTAINER
@@ -33,15 +33,15 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
-  }
-}
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
+      dispatch(logout());
     },
-  }
-}
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);
