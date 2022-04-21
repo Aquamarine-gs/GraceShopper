@@ -1,40 +1,18 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Login, Signup } from './components/AuthForm';
+import { withRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import Home from './components/Home';
-import { login } from './store';
+import SignupPage from './components/SignupPage';
 
-/**
- * COMPONENT
- */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData();
-  }
-
   render() {
-    const { isLoggedIn } = this.props;
-
     return (
       <div>
-        {/* {isLoggedIn ? (
-          <Switch>
-            <Route path="/home" component={Home} />
-            <Redirect to="/home" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route path="/" exact component={LoginPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/signup" component={Signup} />
-          </Switch>
-        )} */}
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={Signup} />
+          <Route path="/signup" component={SignupPage} />
         </Switch>
       </div>
     );
