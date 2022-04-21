@@ -6,7 +6,7 @@ const {
 } = require('../db');
 module.exports = router;
 
-// api/products
+// api/products  all products
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll();
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// api/products/:id
+// api/products/:id  get product by id
 router.get('/:id', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
