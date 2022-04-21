@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const Comfirmation = () => {
+export const Confirmation = () => {
   return (
     <div>
       <h1>COMFIRMATION</h1>
@@ -9,7 +9,7 @@ export const Comfirmation = () => {
       <p>Your receipt has been emailed to you</p>
       <img src="https://perdidointranslation.files.wordpress.com/2016/07/pokemon-happy.gif" />
       <br />
-      <Link>Back to Home Page</Link>
+      <Link to>Back to Home Page</Link>
     </div>
   );
 };
