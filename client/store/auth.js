@@ -48,10 +48,10 @@ export const actionLogin = (user) => {
 };
 
 // Logout User Action Creator
-export const actionLogout = (user) => {
+export const actionLogout = () => {
   return {
     type: LOGOUT_USER,
-    user,
+    user: {},
   };
 };
 
@@ -93,7 +93,14 @@ export const login = (userData) => {
 // Logout User
 export const logout = () => {
   localStorage.removeItem('user');
-  history.push('/login');
+  return async (dispatch) => {
+    try {
+      dispatch(actionLogout());
+      history.push('/');
+    } catch (error) {
+      console.log('Error logging out', error);
+    }
+  };
 };
 
 /*
@@ -106,7 +113,7 @@ export default function authReducer(state = initialState, action) {
     case LOGIN_USER:
       return action.user;
     case LOGOUT_USER:
-      return {};
+      return action.user;
     default:
       return state;
   }
