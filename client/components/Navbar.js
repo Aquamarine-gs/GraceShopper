@@ -6,7 +6,7 @@ import history from '../history';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-    <h1>POKE MART</h1>
+    <img id="logo" src="../images/logo/pokemart.png" />
     <nav>
       {isLoggedIn ? (
         <div>
