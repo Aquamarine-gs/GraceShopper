@@ -1,4 +1,5 @@
 const path = require('path');
+const dotenv = require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // auth and api routes
-app.use('/auth', require('./auth'));
+// app.use('/auth', require('./auth'));
 app.use('/api', require('./api'));
 
 app.get('/', (req, res) =>
