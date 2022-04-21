@@ -1,4 +1,5 @@
 import axios from 'axios';
+import history from '../history';
 
 /**
  * ACTION TYPES
@@ -10,9 +11,21 @@ const LOGOUT_USER = 'LOGOUT_USER';
 // Get user from localStorage if it exists
 const user = JSON.parse(localStorage.getItem('user'));
 
-const initialState = {
-  user: user ? user : null,
-};
+let initialState = {};
+
+if (user) {
+  initialState = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    street: user.street,
+    city: user.city,
+    state: user.state,
+    zip: user.zip,
+    token: user.token,
+  };
+}
 
 /*
  * ACTION CREATORS
@@ -47,34 +60,40 @@ export const actionLogout = (user) => {
  */
 
 // Register User
-export const register = async (userData) => {
-  try {
-    const { data } = await axios.post('/api/users', userData);
-    if (data) {
-      localStorage.setItem('user', JSON.stringify(data));
+export const register = (userData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/users', userData);
+      if (data) {
+        localStorage.setItem('user', JSON.stringify(data));
+      }
+      dispatch(actionRegister(data));
+    } catch (error) {
+      console.log(error);
     }
-    dispatch(actionRegister(data));
-  } catch (error) {
-    console.log(error);
-  }
+  };
 };
 
 // Login User
-export const login = async (userData) => {
-  try {
-    const { data } = await axios.post('/api/users/login', userData);
-    if (data) {
-      localStorage.setItem('user', JSON.stringify(data));
+export const login = (userData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/users/login', userData);
+      if (data) {
+        localStorage.setItem('user', JSON.stringify(data));
+      }
+      dispatch(actionLogin(data));
+    } catch (error) {
+      console.error('Invalid Credentials, please try again!');
+      console.log(error);
     }
-    dispatch(actionLogin(data));
-  } catch (error) {
-    console.log(error);
-  }
+  };
 };
 
 // Logout User
 export const logout = () => {
   localStorage.removeItem('user');
+  history.push('/login');
 };
 
 /*

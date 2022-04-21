@@ -1,11 +1,51 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { login } from '../store/auth';
+import history from '../history';
 
 const LoginPage = () => {
-  return (
-    <div>LoginPage</div>
-  )
-}
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-export default LoginPage
+  const dispatch = useDispatch();
+
+  const { auth } = useSelector((state) => state);
+
+  useEffect(() => {
+    if (auth && auth.id) {
+      history.push('/');
+    }
+  }, [auth]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      email,
+      password,
+    };
+    dispatch(login(userData));
+  };
+
+  return (
+    <div>
+      <h1>LoginPage</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+};
+
+export default LoginPage;

@@ -1,27 +1,22 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-/**
- * COMPONENT
- */
-export const Home = (props) => {
-  const { username } = props;
+const Home = () => {
+  const { auth } = useSelector((state) => state);
 
-  return (
-    <div>
-      <h3>Welcome, {username}</h3>
-    </div>
-  );
+  if (auth && auth.id) {
+    return (
+      <div>
+        <h1>Welcome, {auth.firstName}</h1>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h1>Welcome, please log in</h1>
+      </div>
+    );
+  }
 };
 
-/**
- * CONTAINER
- */
-const mapState = (state) => {
-  return {
-    username: state.auth.username,
-    products: state.products,
-  };
-};
-
-export default connect(mapState)(Home);
+export default Home;
