@@ -9,7 +9,7 @@ export const Confirmation = () => {
       <p>Your receipt has been emailed to you.</p>
       <img src="https://perdidointranslation.files.wordpress.com/2016/07/pokemon-happy.gif" />
       <br />
-      <Link to>Back to Home Page</Link>
+      <Link to="/">Back to Home Page</Link>
     </div>
   );
 };
