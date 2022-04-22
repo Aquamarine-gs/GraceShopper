@@ -22,10 +22,15 @@ export const SingleProduct = () => {
   const { product } = useSelector((state) => {
     return state;
   });
+
   let { productId } = useParams();
+
+  useEffect(() => {}, [product]);
+
   useEffect(() => {
     dispatch(getSingleProduct(productId));
   }, []);
+
   const added = () => {
     injectStyle();
     toast.success('Added To Cart!', {
