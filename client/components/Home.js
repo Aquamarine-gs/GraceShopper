@@ -8,14 +8,14 @@ const Home = () => {
   if (auth && auth.id) {
     return (
       <div>
-        <h1>Welcome, {auth.firstName}</h1>
+        <h1>Welcome {auth.firstName}</h1>
         <AllProducts />
       </div>
     );
   } else {
     return (
       <div>
-        <h1>Welcome, please log in</h1>
+        <h1>Welcome Guest</h1>
         <AllProducts />
       </div>
     );

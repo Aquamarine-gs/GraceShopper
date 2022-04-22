@@ -3,30 +3,34 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 import history from '../history';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Nav from 'react-bootstrap/Nav';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <img id="logo" src="../images/logo/pokemart.png" />
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-);
+const NavbarComponent = ({ handleClick, isLoggedIn }) => {
+  return (
+    <Navbar bg="light">
+      <Navbar.Brand href="/">
+        <img id="logo" src="../images/logo/pokemart.png" />
+      </Navbar.Brand>
+      <Container className="col-md-4">
+        {isLoggedIn ? (
+          <Nav.Link href="/" onClick={handleClick}>
+            Sign Out
+          </Nav.Link>
+        ) : (
+          <NavDropdown title="Login" id="navbarScrollingDropdown">
+            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/signup">Sign Up</Nav.Link>
+          </NavDropdown>
+        )}
+        {/* need to change cart link */}
+        <Nav.Link href="/">Cart</Nav.Link>
+      </Container>
+    </Navbar>
+  );
+};
 
 /**
  * CONTAINER
@@ -46,4 +50,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(mapState, mapDispatch)(Navbar);
+export default connect(mapState, mapDispatch)(NavbarComponent);

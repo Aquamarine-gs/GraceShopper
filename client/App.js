@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Navbar from './components/Navbar';
+import NavbarComponent from './components/Navbar';
+import { Footer } from './components/Footer';
 import Routes from './Routes';
 import { AllProducts } from './components/AllProducts';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,8 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   return (
     <div>
-      <Navbar />
+      <NavbarComponent />
       <Routes />
+      <Footer />
     </div>
   );
 };
