@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <Navbar bg="light">
       <Container>
-        <Navbar.Brand>POKE MART </Navbar.Brand>
+        <Navbar.Brand>POKÉ MART </Navbar.Brand>
         <Navbar.Text>1234 Pokemart Dr</Navbar.Text>
         <Navbar.Text>Phone: 123-123-1234</Navbar.Text>
         <Navbar.Text>Email: support@pokemart.com</Navbar.Text>
