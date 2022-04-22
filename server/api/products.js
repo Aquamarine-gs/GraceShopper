@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// const { user } = require('pg/lib/defaults');
 
 const {
   models: { Product, UserProducts },
