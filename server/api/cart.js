@@ -35,15 +35,15 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// Description: Initial add item to cart
-// Route: /api/cart/add
-router.post('/add', async (req, res, next) => {
+// Description: Add/delete item to cart
+// Route: /api/cart/edit
+router.post('/edit', async (req, res, next) => {
   try {
-    const { token, productId, quantity, unitPrice } = req.body;
+    const { token, productId, updatedQuantity, unitPrice } = req.body;
     const { id } = await jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByPk(id);
     if (!user) {
-      throw 'user not found';
+      throw new Error('user not found');
     }
     let { id: orderId } = await Order.findOne({
       where: { userId: id, isComplete: false },
@@ -56,35 +56,56 @@ router.post('/add', async (req, res, next) => {
         isComplete: false,
       });
     }
-    let totalPrice;
-    if (quantity && unitPrice) {
-      totalPrice = quantity * unitPrice;
+    let updatedTotalPrice;
+    if (updatedQuantity && unitPrice) {
+      updatedTotalPrice = updatedQuantity * unitPrice;
     }
-    const order = await OrderProducts.create({
-      orderId,
-      productId: Number(productId),
-      quantity: Number(quantity),
-      unitPrice: Number(unitPrice),
-      totalPrice,
+    const cartItem = await OrderProducts.findOne({
+      where: { orderId: Number(orderId), productId: Number(productId) },
     });
-    const cartItems = await OrderProducts.findAll({
-      where: { orderId: Number(orderId) },
-    });
-    console.log('CART ITEMS: ', cartItems);
-    res.json(order);
+
+    if (cartItem) {
+      const { quantity, unitPrice, totalPrice } = cartItem;
+      const existingQuantity = quantity;
+      const existingTotalPrice = totalPrice;
+
+      if (existingQuantity + Number(updatedQuantity) < 1) {
+        const deletedCartItem = await OrderProducts.destroy({
+          where: { orderId, productId },
+        });
+        return res.send('Item deleted');
+      }
+
+      const updatedCartItem = await OrderProducts.update(
+        {
+          quantity: existingQuantity + Number(updatedQuantity),
+          unitPrice: Number(unitPrice),
+          totalPrice: existingTotalPrice + updatedTotalPrice,
+        },
+        {
+          where: {
+            orderId,
+            productId,
+          },
+        },
+      );
+      return res.json(updatedCartItem);
+    }
+
+    if (!cartItem && updatedQuantity > 0) {
+      const order = await OrderProducts.create({
+        orderId,
+        productId: Number(productId),
+        quantity: Number(updatedQuantity),
+        unitPrice: Number(unitPrice),
+        totalPrice: updatedTotalPrice,
+      });
+      res.json(order);
+    } else {
+      return res.send('Item not found');
+    }
   } catch (err) {
     err.status = 401;
-    throw new Error('bad token');
+    throw new Error('An error occurred adding an item to the cart');
   }
 });
-
-// Description: Update items in cart
-// Route: /api/cart/update
-// router.put('/update', async (req, res, next) => {
-//   const { token, productId, quantity, unitPrice } = req.body;
-//   const { id } = await jwt.verify(token, process.env.JWT_SECRET);
-//   const user = await User.findByPk(id);
-//   if (!user) {
-//     throw 'user not found';
-//   }
-// });
