@@ -4,7 +4,7 @@ import { withRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import Home from './components/Home';
 import SignupPage from './components/SignupPage';
-import SingleProduct from './components/SingleProduct';
+import { SingleProduct } from './components/SingleProduct';
 
 class Routes extends Component {
   render() {

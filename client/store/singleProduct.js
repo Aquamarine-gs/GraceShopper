@@ -14,8 +14,8 @@ export const getSingleProduct = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/products/${id}`);
-
-      dispatch(actionGetSingleProduct(data));
+      data.product.similar = data.similar;
+      dispatch(actionGetSingleProduct(data.product));
     } catch (error) {
       console.log(error);
     }

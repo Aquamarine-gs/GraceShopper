@@ -20,7 +20,10 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
-    res.json(product);
+    const similar = await Product.findAll({
+      where: { category: product.category },
+    });
+    res.json({ product, similar });
   } catch (err) {
     next(err);
   }

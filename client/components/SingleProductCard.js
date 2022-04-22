@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 
 const styles = {
   card: {
@@ -17,7 +18,7 @@ const styles = {
 };
 
 export const SingleProductCard = (props) => {
-  const { imageUrl, name, price, category } = props.props;
+  const { imageUrl, name, price, category, id } = props.props;
 
   return (
     // <Card style={{ width: '18rem', margin: '10px' }}>
@@ -25,7 +26,11 @@ export const SingleProductCard = (props) => {
       <Card.Img variant="top" src={imageUrl} style={styles.cardImage} />
       <Card.Body>
         <Card.Title>
-          <b>{name}</b>
+          <Link
+            to={`/products/${id}`}
+            style={{ textDecoration: 'none', color: 'black' }}>
+            {name}
+          </Link>
         </Card.Title>
         <Card.Subtitle>{category}</Card.Subtitle>
         <Card.Text>{`$ ${price / 100} `}</Card.Text>
