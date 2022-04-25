@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import history from '../history';
 import { toast, ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
+import { updateCart, getCart } from '../store/cart';
 
 const styles = {
   card: {
@@ -26,6 +27,10 @@ export const SingleProductCard = (props) => {
   const dispatch = useDispatch();
   const { imageUrl, name, price, category, id } = props.props;
 
+  const { auth } = useSelector((state) => {
+    return state;
+  });
+
   const { productId } = useParams();
 
   if (productId) {
@@ -34,7 +39,7 @@ export const SingleProductCard = (props) => {
     }, [productId]);
   }
 
-  const added = () => {
+  const added = async () => {
     injectStyle();
     toast.success('Added To Cart!', {
       position: 'top-right',
@@ -45,6 +50,15 @@ export const SingleProductCard = (props) => {
       draggable: true,
       progress: undefined,
     });
+    await dispatch(
+      updateCart({
+        token: auth.token,
+        productId: id,
+        updatedQuantity: 1,
+        unitPrice: price,
+      }),
+    );
+    await dispatch(getCart(auth.token));
   };
 
   return (
