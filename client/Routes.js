@@ -6,6 +6,7 @@ import Home from './components/Home';
 import SignupPage from './components/SignupPage';
 import { SingleProduct } from './components/SingleProduct';
 import Cart from './components/Cart';
+import Confirmation from './components/Confirmation';
 
 class Routes extends Component {
   render() {
@@ -17,6 +18,7 @@ class Routes extends Component {
           <Route path="/signup" component={SignupPage} />
           <Route exact path="/products/:productId" component={SingleProduct} />
           <Route path="/cart" component={Cart} />
+          <Route path="/confirm" component={Confirmation} />
         </Switch>
       </div>
     );

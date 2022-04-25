@@ -123,3 +123,36 @@ router.post('/edit', async (req, res, next) => {
     throw new Error('An error occurred adding an item to the cart');
   }
 });
+
+// Description: Complete purchase
+// Route: /api/cart/complete
+router.put('/complete', async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    console.log(token);
+    const { id } = await jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error('user not found');
+    }
+    console.log(user);
+    let order = await Order.findOne({
+      where: { userId: id, isComplete: false },
+      attributes: ['id'],
+    });
+    const completedOrder = await order.update(
+      {
+        isComplete: true,
+      },
+      {
+        where: {
+          userId: id,
+          isComplete: false,
+        },
+      },
+    );
+    return res.json(completedOrder);
+  } catch (error) {
+    console.log(error);
+  }
+});
