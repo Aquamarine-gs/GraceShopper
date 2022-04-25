@@ -5,6 +5,8 @@ import { getSingleProduct } from '../store/singleProduct';
 import Card from 'react-bootstrap/Card';
 import { Link, useParams } from 'react-router-dom';
 import history from '../history';
+import { toast, ToastContainer } from 'react-toastify';
+import { injectStyle } from 'react-toastify/dist/inject-style';
 
 const styles = {
   card: {
@@ -32,10 +34,25 @@ export const SingleProductCard = (props) => {
     }, [productId]);
   }
 
+  const added = () => {
+    injectStyle();
+    toast.success('Added To Cart!', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     // <Card style={{ width: '18rem', margin: '10px' }}>
     <Card style={styles.card} className="singleProduct">
-      <Card.Img variant="top" src={imageUrl} style={styles.cardImage} />
+      <Link to={`/products/${id}`}>
+        <Card.Img variant="top" src={imageUrl} style={styles.cardImage} />
+      </Link>
       <Card.Body>
         <Link
           to={`/products/${id}`}
@@ -44,7 +61,9 @@ export const SingleProductCard = (props) => {
         </Link>
         <Card.Subtitle>{category}</Card.Subtitle>
         <Card.Text>{`$ ${price / 100} `}</Card.Text>
-        <Button variant="primary">Add to Cart</Button>
+        <Button variant="primary" onClick={added}>
+          Add to Cart
+        </Button>
       </Card.Body>
     </Card>
   );

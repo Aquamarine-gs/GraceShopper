@@ -82,7 +82,7 @@ export const SingleProduct = () => {
         </Col>
         <Container fluid>
           <h2>Other Great Products</h2>
-          <Row xs={1} md={product.similar.length - 1}>
+          <Row xs={1} sm={2} md={3} lg={4} xl={product.similar.length - 1}>
             {product.similar.map((productMap) => {
               if (product.id !== productMap.id) {
                 return (
