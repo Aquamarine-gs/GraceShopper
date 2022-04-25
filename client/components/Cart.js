@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../store/products';
 import { getCart, updateCart, completePurchase } from '../store/cart';
 import history from '../history';
+import { toast, ToastContainer } from 'react-toastify';
+import { injectStyle } from 'react-toastify/dist/inject-style';
 
 const Cart = () => {
+  toast.configure();
+
   const dispatch = useDispatch();
   const [updated, setUpdated] = useState(false);
   const { cart, auth } = useSelector((state) => {
@@ -77,6 +81,19 @@ const Cart = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    injectStyle();
+    if (!cart || cart.length < 1) {
+      toast.error("There aren't any items in your cart!", {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
     const userData = {
       creditCard,
       expiration,

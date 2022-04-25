@@ -129,13 +129,11 @@ router.post('/edit', async (req, res, next) => {
 router.put('/complete', async (req, res, next) => {
   try {
     const { token } = req.body;
-    console.log(token);
     const { id } = await jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByPk(id);
     if (!user) {
       throw new Error('user not found');
     }
-    console.log(user);
     let order = await Order.findOne({
       where: { userId: id, isComplete: false },
       attributes: ['id'],
