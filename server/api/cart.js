@@ -8,11 +8,13 @@ module.exports = router;
 
 // Description: Get all items in a cart
 // Route: /api/cart
-router.get('/', async (req, res, next) => {
+router.get('/:token', async (req, res, next) => {
+  console.log(req.params.token);
   try {
-    const { token } = req.body;
+    const token = req.params.token;
     const { id } = await jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByPk(id);
+    console.log(user);
     if (!user) {
       throw 'user not found';
     }
@@ -22,6 +24,7 @@ router.get('/', async (req, res, next) => {
     if (!orderId) {
       return res.send('order number not found');
     }
+
     const cart = await OrderProducts.findAll({
       where: { orderId: orderId.id },
     });
@@ -45,17 +48,20 @@ router.post('/edit', async (req, res, next) => {
     if (!user) {
       throw new Error('user not found');
     }
-    let { id: orderId } = await Order.findOne({
+
+    let orderId = await Order.findOne({
       where: { userId: id, isComplete: false },
       attributes: ['id'],
     });
-
-    if (orderId == null) {
+    orderId = orderId.id;
+    if (orderId === null) {
       orderId = await Order.create({
         userId: id,
         isComplete: false,
       });
+      orderId = orderId.id;
     }
+
     let updatedTotalPrice;
     if (updatedQuantity && unitPrice) {
       updatedTotalPrice = updatedQuantity * unitPrice;
@@ -89,6 +95,7 @@ router.post('/edit', async (req, res, next) => {
           },
         },
       );
+      console.log(updatedCartItem);
       return res.json(updatedCartItem);
     }
 

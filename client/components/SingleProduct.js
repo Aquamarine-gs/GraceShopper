@@ -15,23 +15,24 @@ import { toast, ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { SingleProductCard } from './SingleProductCard';
+import { updateCart, getCart } from '../store/cart';
 
 toast.configure();
 export const SingleProduct = () => {
   const dispatch = useDispatch();
-  const { product } = useSelector((state) => {
+  const { product, cart, auth } = useSelector((state) => {
     return state;
   });
 
   let { productId } = useParams();
 
-  useEffect(() => {}, [product]);
+  useEffect(() => {}, [product, cart]);
 
   useEffect(() => {
     dispatch(getSingleProduct(productId));
   }, []);
 
-  const added = () => {
+  const added = async (product) => {
     injectStyle();
     toast.success('Added To Cart!', {
       position: 'top-right',
@@ -42,6 +43,15 @@ export const SingleProduct = () => {
       draggable: true,
       progress: undefined,
     });
+    await dispatch(
+      updateCart({
+        token: auth.token,
+        productId: product.id,
+        updatedQuantity: 1,
+        unitPrice: product.price,
+      }),
+    );
+    await dispatch(getCart(auth.token));
   };
 
   if (product && product.name && product.similar) {
@@ -71,7 +81,7 @@ export const SingleProduct = () => {
                 </DropdownButton>
                 <Stack>
                   <h5>${product.price / 100}</h5>
-                  <Button variant="primary" onClick={added}>
+                  <Button variant="primary" onClick={() => added(product)}>
                     Add To Cart
                   </Button>
                 </Stack>

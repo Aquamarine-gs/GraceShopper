@@ -29,7 +29,7 @@ export const actionUpdateCart = (cart) => {
 export const getCart = (token) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/cart`, token);
+      const { data } = await axios.get(`/api/cart/${token}`);
       dispatch(actionGetCart(data));
     } catch (error) {
       console.log(error);
@@ -51,7 +51,8 @@ export const deleteCart = (token) => {
 export const updateCart = (product) => {
   return async (dispatch) => {
     try {
-      const { data: updated } = await axios.put(`/api/cart`, product);
+      const { data: updated } = await axios.post(`/api/cart/edit`, product);
+      console.log(updated);
       dispatch(actionUpdateCart(updated));
     } catch (error) {
       console.log(error);
@@ -68,7 +69,7 @@ export default function cartReducer(state = initialState, action) {
       return [];
     case UPDATE_CART:
       return state.map((cart) =>
-        cart.id === action.cart.id ? action.cart : cart,
+        cart.id === action.cart.id ? [...state, action.cart] : cart,
       );
 
     default:
