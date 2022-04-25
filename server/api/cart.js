@@ -9,12 +9,10 @@ module.exports = router;
 // Description: Get all items in a cart
 // Route: /api/cart
 router.get('/:token', async (req, res, next) => {
-  console.log(req.params.token);
   try {
     const token = req.params.token;
     const { id } = await jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByPk(id);
-    console.log(user);
     if (!user) {
       throw 'user not found';
     }
@@ -48,13 +46,12 @@ router.post('/edit', async (req, res, next) => {
     if (!user) {
       throw new Error('user not found');
     }
-
     let orderId = await Order.findOne({
       where: { userId: id, isComplete: false },
       attributes: ['id'],
     });
-    orderId = orderId.id;
-    if (orderId === null) {
+    if (orderId !== null) orderId = orderId.id;
+    if (!orderId) {
       orderId = await Order.create({
         userId: id,
         isComplete: false,
@@ -95,7 +92,6 @@ router.post('/edit', async (req, res, next) => {
           },
         },
       );
-      console.log(updatedCartItem);
       return res.json(updatedCartItem);
     }
 
