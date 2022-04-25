@@ -18,7 +18,7 @@ export const AllProducts = () => {
 
   return (
     <Container fluid>
-      <Row xs={1} md={5}>
+      <Row xs={1} sm={2} md={3} lg={4} xl={5}>
         {products.map((product) => (
           <div key={product.id}>
             <Col>
