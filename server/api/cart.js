@@ -20,11 +20,12 @@ router.get('/:token', async (req, res, next) => {
       where: { userId: id, isComplete: false },
     });
     if (!orderId) {
-      return res.send('order number not found');
+      return res.send([]);
     }
 
     const cart = await OrderProducts.findAll({
       where: { orderId: orderId.id },
+      include: { model: Product },
     });
     if (!cart) {
       return res.send('no cart items');
@@ -65,6 +66,11 @@ router.post('/edit', async (req, res, next) => {
     }
     const cartItem = await OrderProducts.findOne({
       where: { orderId: Number(orderId), productId: Number(productId) },
+      include: [
+        {
+          model: Product,
+        },
+      ],
     });
 
     if (cartItem) {
@@ -90,6 +96,11 @@ router.post('/edit', async (req, res, next) => {
             orderId,
             productId,
           },
+          include: [
+            {
+              model: Product,
+            },
+          ],
         },
       );
       return res.json(updatedCartItem);
@@ -110,5 +121,36 @@ router.post('/edit', async (req, res, next) => {
   } catch (err) {
     err.status = 401;
     throw new Error('An error occurred adding an item to the cart');
+  }
+});
+
+// Description: Complete purchase
+// Route: /api/cart/complete
+router.put('/complete', async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    const { id } = await jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error('user not found');
+    }
+    let order = await Order.findOne({
+      where: { userId: id, isComplete: false },
+      attributes: ['id'],
+    });
+    const completedOrder = await order.update(
+      {
+        isComplete: true,
+      },
+      {
+        where: {
+          userId: id,
+          isComplete: false,
+        },
+      },
+    );
+    return res.json(completedOrder);
+  } catch (error) {
+    console.log(error);
   }
 });

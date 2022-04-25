@@ -13,29 +13,40 @@ const NavbarComponent = ({ handleClick, isLoggedIn }) => {
   const { auth } = useSelector((state) => state);
   return (
     <Navbar bg="light">
-      <Navbar.Brand href="/">
+      <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
         <img id="logo" src="../images/logo/pokemart.png" />
-      </Navbar.Brand>
+      </Link>
       <Container className="navbar-right">
         {isLoggedIn ? (
           <Nav>
             <Navbar.Text>Welcome {auth.firstName}!</Navbar.Text>
-            <Nav.Link href="/" onClick={handleClick}>
+            <Link
+              to="/"
+              onClick={handleClick}
+              style={{ textDecoration: 'none', color: 'black' }}>
               Sign Out
-            </Nav.Link>
+            </Link>
           </Nav>
         ) : (
           <Nav>
             <Navbar.Text>Welcome Guest!</Navbar.Text>
             <NavDropdown title="LOGIN" id="navbarScrollingDropdown">
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/signup">Sign Up</Nav.Link>
+              <Link
+                to="/login"
+                style={{ textDecoration: 'none', color: 'black' }}>
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                style={{ textDecoration: 'none', color: 'black' }}>
+                Sign Up
+              </Link>
             </NavDropdown>
           </Nav>
         )}
         {/* need to change cart link */}
         <Nav>
-          <Nav.Link href="/">
+          <Link to="/cart" style={{ textDecoration: 'none', color: 'black' }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -46,7 +57,7 @@ const NavbarComponent = ({ handleClick, isLoggedIn }) => {
               <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
             </svg>
             CART
-          </Nav.Link>
+          </Link>
         </Nav>
       </Container>
     </Navbar>
