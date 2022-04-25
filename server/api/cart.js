@@ -25,6 +25,7 @@ router.get('/:token', async (req, res, next) => {
 
     const cart = await OrderProducts.findAll({
       where: { orderId: orderId.id },
+      include: { model: Product },
     });
     if (!cart) {
       return res.send('no cart items');
@@ -65,6 +66,11 @@ router.post('/edit', async (req, res, next) => {
     }
     const cartItem = await OrderProducts.findOne({
       where: { orderId: Number(orderId), productId: Number(productId) },
+      include: [
+        {
+          model: Product,
+        },
+      ],
     });
 
     if (cartItem) {
@@ -90,6 +96,11 @@ router.post('/edit', async (req, res, next) => {
             orderId,
             productId,
           },
+          include: [
+            {
+              model: Product,
+            },
+          ],
         },
       );
       return res.json(updatedCartItem);

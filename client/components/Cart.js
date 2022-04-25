@@ -1,14 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container, Col, Row } from 'react-bootstrap';
-
-const cartItems = [
-  { name: 'Potion', quantity: 2, price: 1199 },
-  { name: 'Great Ball', quantity: 3, price: 1999 },
-  { name: 'Hyper Potion', quantity: 2, price: 1199 },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../store/products';
+import { getCart, updateCart } from '../store/cart';
 
 const Cart = () => {
-  const [subtotal, setSubtotal] = useState(0);
+  const dispatch = useDispatch();
+  const [updated, setUpdated] = useState(false);
+  const { products, cart, auth } = useSelector((state) => {
+    return state;
+  });
+  const whatever = async () => {
+    await dispatch(getProducts());
+    await dispatch(getCart(auth.token));
+  };
+  useEffect(() => {
+    whatever();
+  }, [updated]);
+
+  const add = async (product) => {
+    await dispatch(
+      updateCart({
+        token: auth.token,
+        productId: product.productId,
+        updatedQuantity: 1,
+        unitPrice: product.unitPrice,
+      }),
+    );
+    setUpdated(!updated);
+  };
+
+  const minus = async (product) => {
+    await dispatch(
+      updateCart({
+        token: auth.token,
+        productId: product.productId,
+        updatedQuantity: -1,
+        unitPrice: product.unitPrice,
+      }),
+    );
+    setUpdated(!updated);
+  };
+
   return (
     <Container>
       <h1>Checkout</h1>
@@ -17,20 +50,18 @@ const Cart = () => {
         <Col>Quantity</Col>
         <Col>Price</Col>
       </Row>
-      {cartItems ? (
-        cartItems.map((item) => {
-          const [quant, setQuant] = useState(item.quantity);
-          if (quant < 1) return;
-          setSubtotal((quant * item.price) / 100);
+
+      {cart ? (
+        cart.map((item) => {
           return (
-            <Row key={item.name}>
-              <Col>{item.name}</Col>
+            <Row key={item.productId}>
+              <Col>{item && item.product ? item.product.name : 'no name'}</Col>
               <Col>
-                <button onClick={() => setQuant(quant - 1)}>-</button>
-                {quant}
-                <button onClick={() => setQuant(quant + 1)}>+</button>
+                <button onClick={() => minus(item)}>-</button>
+                {item.quantity}
+                <button onClick={() => add(item)}>+</button>
               </Col>
-              <Col>{(quant * item.price) / 100}</Col>
+              <Col>${(item.totalPrice / 100).toFixed(2)}</Col>
             </Row>
           );
         })
@@ -41,12 +72,12 @@ const Cart = () => {
       <Row>
         <Col>Subtotal:</Col>
         <Col>
-          {subtotal}
-          {/* {cartItems.reduce((previousValue, currentValue) => {
-            return (
-              previousValue + (currentValue.quantity * currentValue.price) / 100
-            );
-          }, 0)} */}
+          $
+          {cart
+            .reduce((previousValue, currentValue) => {
+              return previousValue + currentValue.totalPrice / 100;
+            }, 0)
+            .toFixed(2)}
         </Col>
       </Row>
     </Container>
