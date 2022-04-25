@@ -15,7 +15,7 @@ export const AllProducts = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getCart(auth.token));
+    auth && auth.token ? dispatch(getCart(auth.token)) : null;
   }, []);
 
   return (

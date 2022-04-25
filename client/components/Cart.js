@@ -51,7 +51,7 @@ const Cart = () => {
         <Col>Price</Col>
       </Row>
 
-      {cart ? (
+      {cart && cart.length ? (
         cart.map((item) => {
           return (
             <Row key={item.productId}>

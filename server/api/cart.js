@@ -20,7 +20,7 @@ router.get('/:token', async (req, res, next) => {
       where: { userId: id, isComplete: false },
     });
     if (!orderId) {
-      return res.send('order number not found');
+      return res.send([]);
     }
 
     const cart = await OrderProducts.findAll({

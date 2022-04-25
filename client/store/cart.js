@@ -52,7 +52,6 @@ export const updateCart = (product) => {
   return async (dispatch) => {
     try {
       const { data: updated } = await axios.post(`/api/cart/edit`, product);
-      console.log(updated);
       dispatch(actionUpdateCart(updated));
     } catch (error) {
       console.log(error);

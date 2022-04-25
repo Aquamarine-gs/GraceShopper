@@ -35,7 +35,7 @@ export const SingleProduct = () => {
   const added = async (product) => {
     injectStyle();
     toast.success('Added To Cart!', {
-      position: 'top-right',
+      position: 'top-center',
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
