@@ -158,6 +158,26 @@ router.get('/:id/all', async (req, res, next) => {
   }
 });
 
+// Description: Get if user is admin
+// Route: GET api/users/:id/isAdmin
+router.get('/:id/:token/isAdmin', async (req, res, next) => {
+  try {
+    const token = req.params.token;
+    const { id } = await jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error('user not found');
+    }
+    if (!user.isAdmin) {
+      return res.send(false);
+    } else {
+      return res.json(user.isAdmin);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // // Description: Get single users
 // // Route: GET api/users/:id
 router.get('/:id', async (req, res, next) => {
