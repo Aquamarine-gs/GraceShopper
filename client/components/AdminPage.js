@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createProduct, getProducts, deleteProduct } from '../store/products';
 import { Row, Col, Container, Button } from 'react-bootstrap';
+import { getAdmin } from '../store/admin';
 
 const AdminPage = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,8 @@ const AdminPage = () => {
   const [updated, setUpdated] = useState(false);
   const dispatch = useDispatch();
 
-  const { auth, products } = useSelector((state) => state);
+  const { auth, products, admin } = useSelector((state) => state);
+
   const onChange = (e) => {
     e.persist();
     setFormData((prevState) => ({
@@ -29,8 +31,13 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
+    dispatch(getAdmin(auth));
     dispatch(getProducts());
-  }, []);
+  }, [auth]);
+
+  if (admin === false) {
+    return <h1>Get outta here!</h1>;
+  }
 
   const deleteProductFunc = async (product) => {
     await dispatch(
@@ -57,9 +64,10 @@ const AdminPage = () => {
 
     dispatch(createProduct(productData));
   };
-  if (auth && auth.isAdmin === false) {
-    return <h1>Get Out</h1>;
-  }
+
+  // if (isAdmin && isAdmin.data === false) {
+  //   return <h1>Get outta here!</h1>;
+  // }
 
   return (
     <div>
