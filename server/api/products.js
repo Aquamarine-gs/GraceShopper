@@ -31,11 +31,12 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // api/products/:id  // add admin check in here
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id/:token', async (req, res, next) => {
   try {
-    const { token } = req.body;
+    const token = req.params.token;
     const { id } = await jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByPk(id);
+
     if (!user) {
       throw new Error('user not found');
     }

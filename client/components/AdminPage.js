@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createProduct, getProducts } from '../store/products';
+import { createProduct, getProducts, deleteProduct } from '../store/products';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 
 const AdminPage = () => {
@@ -16,7 +16,7 @@ const AdminPage = () => {
   });
 
   const { name, price, description, imageUrl, quantity, category } = formData;
-
+  const [updated, setUpdated] = useState(false);
   const dispatch = useDispatch();
 
   const { auth, products } = useSelector((state) => state);
@@ -31,6 +31,16 @@ const AdminPage = () => {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
+
+  const deleteProductFunc = async (product) => {
+    await dispatch(
+      deleteProduct({
+        token: auth.token,
+        product,
+      }),
+    );
+    setUpdated(!updated);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -135,7 +145,7 @@ const AdminPage = () => {
               <Col xs={1}>
                 <Button
                   variant="outline-primary"
-                  onClick={() => deleteAll(item)}>
+                  onClick={() => deleteProductFunc(item)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
