@@ -28,9 +28,9 @@ const Cart = () => {
   const { creditCard, expiration, code, street, city, state, zip } = formData;
 
   const whatever = async () => {
-    await dispatch(getProducts());
     await dispatch(getCart(auth.token));
   };
+
   useEffect(() => {
     whatever();
   }, [updated]);
@@ -117,6 +117,7 @@ const Cart = () => {
         <Col xs={1}>Price</Col>
       </Row>
       <hr />
+
       {cart && cart.length ? (
         cart.map((item) => {
           return (
@@ -155,7 +156,6 @@ const Cart = () => {
                   </svg>
                 </Button>
               </Col>
-
               <Col xs={1}>${(item.totalPrice / 100).toFixed(2)}</Col>
             </Row>
           );
