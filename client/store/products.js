@@ -56,11 +56,12 @@ export const createProduct = (product) => {
   };
 };
 
-export const deleteProduct = (product) => {
+export const deleteProduct = (data) => {
   return async (dispatch) => {
     try {
+      const { token, product } = data;
       const { data: toBeDeleted } = await axios.delete(
-        `/api/products/${product.id}`,
+        `/api/products/${product.id}/${token}`,
       );
       dispatch(actionDeleteProduct(toBeDeleted));
     } catch (error) {

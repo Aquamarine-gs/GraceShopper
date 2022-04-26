@@ -8,6 +8,7 @@ import { SingleProduct } from './components/SingleProduct';
 import Cart from './components/Cart';
 import Confirmation from './components/Confirmation';
 import ErrorPage from './components/ErrorPage';
+import AdminPage from './components/AdminPage';
 
 class Routes extends Component {
   render() {
@@ -21,6 +22,7 @@ class Routes extends Component {
           <Route path="/cart" component={Cart} />
           <Route path="/confirm" component={Confirmation} />
           <Route path="/" component={ErrorPage} />
+          <Route path="/admin" component={AdminPage} />
         </Switch>
       </div>
     );
