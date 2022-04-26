@@ -31,6 +31,7 @@ const LoginPage = () => {
   return (
     <Form className="text-center" onSubmit={onSubmit}>
       <h1>Login Page</h1>
+      <hr />
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
