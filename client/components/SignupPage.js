@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import history from '../history';
 import { register } from '../store/auth';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -68,95 +72,117 @@ const SignupPage = () => {
   };
 
   return (
-    <div>
+    <Form className="text-center" onSubmit={onSubmit}>
       <h1>Sign up</h1>
-      <form onSubmit={onSubmit}>
-        <div>
-          <input
-            type="text"
+      <hr />
+      <Row>
+        <Col>
+          <Form.Label>First Name </Form.Label>
+
+          <Form.Control
             name="firstName"
+            type="text"
+            placeholder="First name"
             value={firstName}
-            placeholder="First Name"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <input
-            type="text"
+        </Col>
+        <Col>
+          <Form.Label>Last Name</Form.Label>
+
+          <Form.Control
             name="lastName"
+            placeholder="Last name"
+            type="text"
             value={lastName}
-            placeholder="Last Name"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <input
-            type="email"
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
             name="email"
+            type="email"
+            placeholder="Enter email"
             value={email}
-            placeholder="Email Address"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <input
-            type="password"
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             name="password"
-            value={password}
-            placeholder="Password"
-            onChange={onChange}
-          />
-        </div>
-        <div>
-          <input
             type="password"
+            placeholder="Password"
+            value={password}
+            onChange={onChange}
+          />
+        </Form.Group>
+        <Form.Group as={Col} controlId="formGridPassword2">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
             name="password2"
+            type="password"
+            placeholder="Password"
             value={password2}
-            placeholder="Confirm Password"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <input
-            type="text"
+        </Form.Group>
+      </Row>
+      <Row className="mb-3">
+        <Form.Group controlId="formGridAddress1">
+          <Form.Label>Address</Form.Label>
+          <Form.Control
             name="street"
+            placeholder="1234 Main St"
             value={street}
-            placeholder="Street Address"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <input
-            type="text"
+        </Form.Group>
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridCity">
+          <Form.Label>City</Form.Label>
+          <Form.Control
             name="city"
+            type="text"
             value={city}
             placeholder="City"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <input
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridState">
+          <Form.Label>State</Form.Label>
+          <Form.Control
             type="text"
             name="state"
             value={state}
             placeholder="State"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <input
-            type="text"
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridZip">
+          <Form.Label>Zip</Form.Label>
+          <Form.Control
             name="zip"
+            type="text"
             value={zip}
             placeholder="Zip Code"
             onChange={onChange}
           />
-        </div>
-        <div>
-          <button type="submit">Register</button>
-        </div>
-      </form>
-    </div>
+        </Form.Group>
+      </Row>
+
+      <Button variant="primary" type="submit">
+        Register
+      </Button>
+      <Row></Row>
+    </Form>
   );
 };
 

@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
-export const Confirmation = () => {
+const Confirmation = () => {
   return (
-    <Container>
+    <Container className="text-center">
       <div>
         <h1>CONFIRMATION</h1>
         <h2>PURCHASE SUCCESSFUL!</h2>
