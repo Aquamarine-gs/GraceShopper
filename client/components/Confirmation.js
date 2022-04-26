@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 
 const Confirmation = () => {
   return (
-    <Container>
+    <Container className="text-center">
       <div>
         <h1>CONFIRMATION</h1>
         <h2>PURCHASE SUCCESSFUL!</h2>
